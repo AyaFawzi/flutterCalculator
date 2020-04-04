@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+//Step4: import file 'calculatorButton' to be able to use class 'MyButton'
 import 'calculatorButton.dart';
 
+//Step12: call 'MyApp' class ,then run app
 void main() => runApp(MyApp());
 
+// Step1: create stateFulWidget
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
@@ -11,7 +14,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  // calculator logic
   String input = "";
   String output = "";
   String temp = "";
@@ -20,8 +22,8 @@ class _MyAppState extends State<MyApp> {
 
   List<String> list = List();
 
+  //Step11: create 'factor' method to calculate factorial
   factor() {
-    //calculate factorial
     double fac = double.parse(list.last);
     double res = 1;
     if (fac < 0) {
@@ -38,8 +40,8 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  //Step9: create 'check' method , used to check if user pressed on button after display the output
   check({String buttonText}) {
-    // if user pressed on button after display the result
     if (temp2 != "") {
       if (temp2 == "Wrong format" || temp2 == "Unable to divide by zero") {
         list.clear();
@@ -70,8 +72,8 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  //Step10: create 'check2' method, it specified how to display the input if user pressed on -/+ button followed by number or other
   check2() {
-    //how to display the input if user pressed on -/+ button followed by number or other
     if (!list.isEmpty && list.last == "(-" && temp != '') {
       list.last = "-" + temp;
       temp = "";
@@ -83,8 +85,8 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  //step8: create 'display' method to take calculated input from 'calculate' method and put final shape of output
   display(double number) {
-    // how to display final result
     if (number.truncateToDouble() == number)
       return number.toStringAsFixed(0);
     else if ((number.toString().length > 11))
@@ -93,8 +95,9 @@ class _MyAppState extends State<MyApp> {
       return number.toString();
   }
 
+  // Step6:  start calculator logic => create 'result' method which is one parameter of parameters of button
+  // it is used to control if user pressed on any button at any time
   result(String buttonText) {
-    //  if user pressed on any button at any time
     setState(() {
       if (buttonText == "=") {
         if (list.isEmpty) {
@@ -173,8 +176,8 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  //Step7: create 'calculate' method to calculate the input and out final result for this input
   calculate(List<String> list) {
-    // how to calculate the input
     if (list.last == "(-") {
       list.last = "Wrong format";
     } else {
@@ -250,17 +253,16 @@ class _MyAppState extends State<MyApp> {
     temp = "";
   }
 
+  // Step2: in build method,first put design for app by using these widgets and using two Text Widget one for display the input
+  //and another for display the output
   Widget build(BuildContext context) {
-    //design
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Calculator",
       home: Scaffold(
-          // appBar: AppBar(title: Text("Calaulator",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),backgroundColor:Colors.grey[800],centerTitle: true,),
           body: ListView(
         children: <Widget>[
           Container(
-            //   height: double.infinity,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -293,6 +295,7 @@ class _MyAppState extends State<MyApp> {
                 Padding(
                   padding: EdgeInsets.all(20),
                 ),
+                // Step5: inside  each row widget , call ' MyButton' method to create calculator buttons and give it its parameters
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
